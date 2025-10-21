@@ -1,202 +1,203 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!doctype html>
+<html lang="ko">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.1">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Calculator — Numpad "." → 000</title>
+  <style>
+    :root{--bg:#0f1724;--panel:#0b1220;--accent:#1e88e5;--muted:#94a3b8;--btn:#0f1724}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Nanum Gothic',sans-serif;background:var(--bg);display:flex;align-items:center;justify-content:center}
+    .calc{width:360px;background:linear-gradient(180deg,#071124 0%, #071827 100%);border-radius:12px;padding:18px;box-shadow:0 8px 30px rgba(2,6,23,.6)}
+    .display{height:72px;background:rgba(255,255,255,0.03);border-radius:8px;padding:12px;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;color:#e6eef8;font-size:24px;word-break:break-all}
+    .sub{font-size:12px;color:var(--muted);opacity:.9}
+    .keys{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+    button{height:56px;border-radius:8px;border:0;font-size:18px;background:rgba(255,255,255,0.03);color:#e6eef8;cursor:pointer}
+    button.op{background:linear-gradient(180deg,#152e46,#0f2a3f);color:#fff}
+    button.wide{grid-column:span 2}
+    .kbd-hint{font-size:12px;color:var(--muted);margin-top:10px}
   </style>
 </head>
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="ko"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;듀얼 . 계산기&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* (스타일은 이전과 동일) */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>body { display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f0f0; font-family: sans-serif; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.calculator { border: 1px solid #ccc; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); overflow: hidden; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>#display { width: 100%; height: 60px; border: none; text-align: right; padding: 10px 20px; font-size: 2.5em; box-sizing: border-box; background-color: #222; color: white; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.btn { height: 70px; font-size: 1.5em; border: none; background-color: #f9f9f9; cursor: pointer; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.btn:hover { background-color: #eee; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.btn.operator { background-color: #f0ad4e; color: white; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.btn.operator:hover { background-color: #ec9a29; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.btn.clear { background-color: #d9534f; color: white; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.btn.clear:hover { background-color: #c9302c; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.btn.equals { background-color: #5cb85c; color: white; grid-column: span 2; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.btn.equals:hover { background-color: #4cae4c; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.btn.decimal { background-color: #e0e0e0; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="calculator"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="text" id="display" value="" readonly&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="buttons"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn clear" onclick="clearDisplay()"&gt;C&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn operator" onclick="appendOperator('/')"&gt;/&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn operator" onclick="appendOperator('*')"&gt;*&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn operator" onclick="appendOperator('-')"&gt;-&lt;/button&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn" onclick="appendNumber('7')"&gt;7&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn" onclick="appendNumber('8')"&gt;8&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn" onclick="appendNumber('9')"&gt;9&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn operator" onclick="appendOperator('+')" style="grid-row: span 2;"&gt;+&lt;/button&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn" onclick="appendNumber('4')"&gt;4&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn" onclick="appendNumber('5')"&gt;5&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn" onclick="appendNumber('6')"&gt;6&lt;/button&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn" onclick="appendNumber('1')"&gt;1&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn" onclick="appendNumber('2')"&gt;2&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn" onclick="appendNumber('3')"&gt;3&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn equals" onclick="calculate()"&gt;=&lt;/button&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn" onclick="appendNumber('0')" style="grid-column: span 2;"&gt;0&lt;/button&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn decimal" onclick="appendDecimal()"&gt;.&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const display = document.getElementById('display');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>let currentInput = '';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>let operator = '';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>let previousInput = '';</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>function appendNumber(num) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>currentInput += num;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display.value = currentInput;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>function appendThreeZeros() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (currentInput.length &gt; 0 || currentInput === '0') {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>currentInput += '000';</p>
-<p class="p1"><span class="Apple-converted-space">                </span>display.value = currentInput;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>currentInput = '000';</p>
-<p class="p1"><span class="Apple-converted-space">                </span>display.value = currentInput;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* --- ▼▼▼ 1. 새로 추가된 소수점 함수 ▼▼▼ --- */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// 소수점을 추가하는 함수</p>
-<p class="p1"><span class="Apple-converted-space">        </span>function appendDecimal() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 이미 소수점이 포함되어 있으면 더 추가하지 않음</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (currentInput.includes('.')) {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 입력이 비어있으면 '0.'으로 시작</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (currentInput === '') {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>currentInput = '0.';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>currentInput += '.';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display.value = currentInput;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>function appendOperator(op) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (currentInput === '') return;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (operator !== '' &amp;&amp; previousInput !== '') {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>calculate();</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>operator = op;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>previousInput = currentInput;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>currentInput = '';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>function clearDisplay() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>currentInput = '';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>previousInput = '';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>operator = '';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display.value = '';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>function calculate() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (previousInput === '' || currentInput === '' || operator === '') return;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>let result;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const prev = parseFloat(previousInput);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const curr = parseFloat(currentInput);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>switch (operator) {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>case '+': result = prev + curr; break;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>case '-': result = prev - curr; break;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>case '*': result = prev * curr; break;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>case '/':</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>if (curr === 0) {</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>alert("0으로 나눌 수 없습니다.");</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>clearDisplay();</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>return;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>result = prev / curr;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>break;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>default: return;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 결과가 정수면 정수로, 아니면 소수점으로 표시</p>
-<p class="p1"><span class="Apple-converted-space">            </span>currentInput = result.toString();</p>
-<p class="p1"><span class="Apple-converted-space">            </span>operator = '';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>previousInput = '';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display.value = currentInput;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* --- ▼▼▼ 2. 새로 추가된 키보드 이벤트 리스너 ▼▼▼ --- */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>document.addEventListener('keydown', function(event) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 숫자 키 (메인 &amp; 키패드)</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (event.key &gt;= '0' &amp;&amp; event.key &lt;= '9') {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>event.preventDefault();</p>
-<p class="p1"><span class="Apple-converted-space">                </span>appendNumber(event.key);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 연산자 키</p>
-<p class="p1"><span class="Apple-converted-space">            </span>else if (['+', '-', '*', '/'].includes(event.key)) {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>event.preventDefault();</p>
-<p class="p1"><span class="Apple-converted-space">                </span>appendOperator(event.key);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 계산 (Enter 키)</p>
-<p class="p1"><span class="Apple-converted-space">            </span>else if (event.key === 'Enter' || event.code === 'NumpadEnter') {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>event.preventDefault();</p>
-<p class="p1"><span class="Apple-converted-space">                </span>calculate();</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 지우기 (Escape 키)</p>
-<p class="p1"><span class="Apple-converted-space">            </span>else if (event.key === 'Escape') {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>event.preventDefault();</p>
-<p class="p1"><span class="Apple-converted-space">                </span>clearDisplay();</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>/* --- ▼▼▼ 3. 핵심 로직: . 키 구분 ▼▼▼ --- */</p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 일반 키보드 . (소수점)</p>
-<p class="p1"><span class="Apple-converted-space">            </span>else if (event.code === 'Period') {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>event.preventDefault();</p>
-<p class="p1"><span class="Apple-converted-space">                </span>appendDecimal();</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 숫자 키패드 . (000)</p>
-<p class="p1"><span class="Apple-converted-space">            </span>else if (event.code === 'NumpadDecimal') {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>event.preventDefault();</p>
-<p class="p1"><span class="Apple-converted-space">                </span>appendThreeZeros();</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>/* --- ▲▲▲ 3. 핵심 로직: . 키 구분 ▲▲▲ --- */</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// (추가) 백스페이스 키</p>
-<p class="p1"><span class="Apple-converted-space">            </span>else if (event.key === 'Backspace') {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>event.preventDefault();</p>
-<p class="p1"><span class="Apple-converted-space">                </span>if (currentInput.length &gt; 0) {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>currentInput = currentInput.slice(0, -1);</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>display.value = currentInput;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+  <div class="calc" role="application" aria-label="Calculator with numpad-dot mapping">
+    <div class="display" id="display" aria-live="polite">
+      <div class="sub" id="expression">0</div>
+      <div id="result">0</div>
+    </div>
+
+    <div class="keys" id="keys">
+      <button data-action="clear">C</button>
+      <button data-action="negate">+/-</button>
+      <button data-action="percent">%</button>
+      <button class="op" data-action="/">÷</button>
+
+      <button data-digit="7">7</button>
+      <button data-digit="8">8</button>
+      <button data-digit="9">9</button>
+      <button class="op" data-action="*">×</button>
+
+      <button data-digit="4">4</button>
+      <button data-digit="5">5</button>
+      <button data-digit="6">6</button>
+      <button class="op" data-action="-">−</button>
+
+      <button data-digit="1">1</button>
+      <button data-digit="2">2</button>
+      <button data-digit="3">3</button>
+      <button class="op" data-action="+">+</button>
+
+      <button data-digit="0" class="wide">0</button>
+      <button data-dot="ui">.</button>
+      <button class="op" data-action="=">=</button>
+    </div>
+
+    <div class="kbd-hint">키보드 사용: 숫자키패드의 <strong>.</strong> 키를 누르면 <strong>000</strong> 입력됩니다. 일반 키보드의 <strong>.</strong>는 소수점 입력입니다.</div>
+  </div>
+
+  <script>
+    // Simple calculator implementation with explicit handling of NumpadDecimal
+    (function(){
+      const expressionEl = document.getElementById('expression');
+      const resultEl = document.getElementById('result');
+      const keys = document.getElementById('keys');
+
+      let expr = '';
+      let lastIsEval = false;
+
+      function render(){
+        expressionEl.textContent = expr || '0';
+        resultEl.textContent = '';
+      }
+
+      function safeEval(input){
+        // Very simple safe-ish evaluation: allow digits, operators, dot, parentheses, percent
+        if(!/^[0-9+\-*/().%\s]*$/.test(input)) return 'Error';
+        try{
+          // Handle percent: convert 'n%' -> '(n/100)'
+          const transformed = input.replace(/(\d+(?:\.\d+)?)%/g, '($1/100)');
+          // eslint-disable-next-line no-new-func
+          const v = Function('return '+transformed)();
+          if(Number.isFinite(v)) return v;
+          return 'Error';
+        }catch(e){
+          return 'Error';
+        }
+      }
+
+      keys.addEventListener('click', e=>{
+        const btn = e.target.closest('button');
+        if(!btn) return;
+        if(btn.dataset.digit) appendDigit(btn.dataset.digit);
+        else if(btn.dataset.dot) appendDot();
+        else if(btn.dataset.action) handleAction(btn.dataset.action);
+        render();
+      });
+
+      function appendDigit(d){
+        if(lastIsEval){ expr = ''; lastIsEval = false; }
+        expr += d;
+      }
+
+      function appendDot(){
+        // UI button behaves as decimal point (regular dot)
+        if(lastIsEval){ expr = ''; lastIsEval = false; }
+        // Prevent multiple dots in the current number token
+        const parts = expr.split(/[^0-9.]/);
+        const current = parts[parts.length-1] || '';
+        if(current.includes('.')) return;
+        if(current === '') expr += '0';
+        expr += '.';
+      }
+
+      function handleAction(act){
+        if(act === 'clear'){ expr = ''; lastIsEval = false; }
+        else if(act === 'negate'){
+          // Try to negate the last number
+          expr = expr.replace(/(\d+(?:\.\d+)?)$/,(m)=>{ return '(-'+m+')'});
+        }
+        else if(act === 'percent'){
+          expr += '%';
+        }
+        else if(act === '='){
+          const res = safeEval(expr);
+          resultEl.textContent = res;
+          lastIsEval = true;
+        }
+        else{
+          // + - * /
+          if(lastIsEval){ // continue with result
+            const prev = resultEl.textContent;
+            if(prev && prev !== 'Error') expr = String(prev);
+            lastIsEval = false;
+          }
+          // avoid two operators in a row
+          if(/[^0-9.)]$/.test(expr)) expr = expr.slice(0,-1);
+          expr += act;
+        }
+      }
+
+      // Keyboard support. We must detect the NUMPAD decimal key ONLY.
+      // KeyboardEvent.code === 'NumpadDecimal' on most browsers for numeric keypad '.'
+      window.addEventListener('keydown', (ev)=>{
+        // Ignore if focus in an input (none in this UI), but keep behaviour consistent
+        // Map digits
+        if(ev.code && ev.code.startsWith('Numpad') && ev.code.length <= 12){
+          // Numpad0..Numpad9
+          if(/^Numpad[0-9]$/.test(ev.code)){
+            const d = ev.code.slice(-1);
+            appendDigit(d);
+            render();
+            ev.preventDefault();
+            return;
+          }
+          if(ev.code === 'NumpadDecimal'){
+            // IMPORTANT: numeric keypad '.' should insert '000' (the user's requirement)
+            if(lastIsEval){ expr = ''; lastIsEval = false; }
+            expr += '000';
+            render();
+            ev.preventDefault();
+            return;
+          }
+          // NumpadAdd/Subtract/Multiply/Divide/Enter
+          if(ev.code === 'NumpadAdd'){ handleAction('+'); render(); ev.preventDefault(); return; }
+          if(ev.code === 'NumpadSubtract'){ handleAction('-'); render(); ev.preventDefault(); return; }
+          if(ev.code === 'NumpadMultiply'){ handleAction('*'); render(); ev.preventDefault(); return; }
+          if(ev.code === 'NumpadDivide'){ handleAction('/'); render(); ev.preventDefault(); return; }
+          if(ev.code === 'NumpadEnter'){ handleAction('='); render(); ev.preventDefault(); return; }
+        }
+
+        // Non-numpad keyboard handling: allow digits, Enter, Backspace, regular dot
+        if(ev.key >= '0' && ev.key <= '9'){
+          appendDigit(ev.key); render(); ev.preventDefault(); return;
+        }
+        if(ev.key === '.'){
+          // Regular '.' (not numeric keypad) should behave as a decimal point
+          appendDot(); render(); ev.preventDefault(); return;
+        }
+        if(ev.key === 'Enter'){
+          handleAction('='); render(); ev.preventDefault(); return;
+        }
+        if(ev.key === 'Backspace'){
+          expr = expr.slice(0,-1); render(); ev.preventDefault(); return;
+        }
+        if(ev.key === '+'||ev.key === '-'||ev.key === '*'||ev.key === '/'){
+          handleAction(ev.key); render(); ev.preventDefault(); return;
+        }
+      });
+
+      // initial render
+      render();
+
+      // Accessibility: announce when NumpadDecimal is used
+      window.addEventListener('keydown', (ev)=>{
+        if(ev.code === 'NumpadDecimal'){
+          // small visual cue in the subdisplay
+          const old = expressionEl.textContent;
+          expressionEl.textContent = expr + ' \u00A0';
+          setTimeout(()=>{ expressionEl.textContent = expr || '0'; }, 200);
+        }
+      });
+
+    })();
+  </script>
 </body>
 </html>
